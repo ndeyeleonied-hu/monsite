@@ -1,0 +1,170 @@
+{% extends "pages/base.html" %}
+{% load static %}
+
+{% block content %}
+
+<style>
+  .hero {
+    min-height: 90vh;
+    background-color: var(--bleu);
+    background-image:
+      linear-gradient(rgba(0,0,0,.45), rgba(0,0,0,.45)),
+      url("{% static 'pages/img/hero.jpg' %}");
+    background-size: cover;
+    background-position: center;
+  }
+  .hero h1 { font-size: clamp(2.5rem, 7vw, 5rem); }
+  .hero .slogan { font-size: 1.4rem; font-weight: 300; }
+</style>
+
+<header class="hero d-flex align-items-center text-white text-center">
+  <div class="container">
+    <h1>Saint-Louis du Sénégal</h1>
+    <p class="slogan mt-3">Perle du fleuve, ville d'histoire, de culture et de jazz</p>
+    <a href="#presentation" class="btn btn-ocre btn-lg mt-4">Découvrir la ville</a>
+  </div>
+</header>
+
+<section id="presentation" class="py-5">
+  <div class="container">
+    <div class="row align-items-center g-5">
+
+      <div class="col-lg-6" data-aos="fade-right">
+        <h2 class="mb-4">Bienvenue à Saint-Louis</h2>
+        <p>
+          Fondée au XVIIe siècle, Saint-Louis est l'une des plus anciennes
+          villes de l'Afrique de l'Ouest. Ancienne capitale du Sénégal, elle
+          s'étend entre le fleuve Sénégal et l'océan Atlantique.
+        </p>
+        <p>
+          Son île, classée au patrimoine mondial de l'UNESCO, est connue pour
+          ses façades coloniales, le pont Faidherbe, ses pirogues colorées et
+          son célèbre festival de jazz.
+        </p>
+        <a href="{% url 'decouvrir' %}" class="btn btn-ocre mt-2">En savoir plus</a>
+      </div>
+
+      <div class="col-lg-6" data-aos="fade-left">
+        <div class="row text-center g-3">
+          <div class="col-6">
+            <div class="p-4 bg-white shadow-sm rounded">
+              <h3 style="color: var(--ocre);">1659</h3>
+              <p class="mb-0 small">Année de fondation</p>
+            </div>
+          </div>
+          <div class="col-6">
+            <div class="p-4 bg-white shadow-sm rounded">
+              <h3 style="color: var(--ocre);">UNESCO</h3>
+              <p class="mb-0 small">Patrimoine mondial</p>
+            </div>
+          </div>
+          <div class="col-6">
+            <div class="p-4 bg-white shadow-sm rounded">
+              <h3 style="color: var(--ocre);">Jazz</h3>
+              <p class="mb-0 small">Festival international</p>
+            </div>
+          </div>
+          <div class="col-6">
+            <div class="p-4 bg-white shadow-sm rounded">
+              <h3 style="color: var(--ocre);">Fleuve</h3>
+              <p class="mb-0 small">Entre le fleuve et l'océan</p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+<section id="lieux" class="py-5 bg-white">
+  <div class="container">
+    <h2 class="text-center mb-2" data-aos="fade-up">Lieux à la une</h2>
+    <p class="text-center text-muted mb-5" data-aos="fade-up">Les incontournables de Saint-Louis</p>
+
+    <div class="row g-4">
+
+      <div class="col-md-4" data-aos="fade-up">
+        <div class="card h-100 border-0 shadow-sm">
+          <div style="height:200px; background:linear-gradient(135deg, var(--bleu), #1b7a9c);" class="rounded-top d-flex align-items-center justify-content-center text-white">Photo à venir</div>
+          <div class="card-body">
+            <span class="badge text-dark" style="background: var(--ocre);">Patrimoine</span>
+            <h5 class="card-title mt-2">Pont Faidherbe</h5>
+            <p class="card-text">Pont métallique emblématique qui relie l'île de Saint-Louis à la terre ferme.</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="col-md-4" data-aos="fade-up" data-aos-delay="150">
+        <div class="card h-100 border-0 shadow-sm">
+          <div style="height:200px; background:linear-gradient(135deg, var(--bleu), #1b7a9c);" class="rounded-top d-flex align-items-center justify-content-center text-white">Photo à venir</div>
+          <div class="card-body">
+            <span class="badge text-dark" style="background: var(--ocre);">Patrimoine</span>
+            <h5 class="card-title mt-2">L'île de Saint-Louis</h5>
+            <p class="card-text">Le cœur historique classé à l'UNESCO, avec ses façades coloniales et ses ruelles.</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="col-md-4" data-aos="fade-up" data-aos-delay="300">
+        <div class="card h-100 border-0 shadow-sm">
+          <div style="height:200px; background:linear-gradient(135deg, var(--bleu), #1b7a9c);" class="rounded-top d-flex align-items-center justify-content-center text-white">Photo à venir</div>
+          <div class="card-body">
+            <span class="badge text-dark" style="background: var(--ocre);">Nature</span>
+            <h5 class="card-title mt-2">La Langue de Barbarie</h5>
+            <p class="card-text">Une bande de sable entre le fleuve et l'océan, célèbre pour ses pirogues colorées.</p>
+          </div>
+        </div>
+      </div>
+
+    </div>
+    <div class="text-center mt-5">
+      <a href="#" class="btn btn-ocre">Voir tous les lieux</a>
+    </div>
+  </div>
+</section>
+
+<section id="actualites" class="py-5">
+  <div class="container">
+    <h2 class="text-center mb-2" data-aos="fade-up">Dernières actualités</h2>
+    <p class="text-center text-muted mb-5" data-aos="fade-up">Restez informé de la vie de la ville</p>
+
+    <div class="row g-4">
+
+      <div class="col-md-4" data-aos="fade-up">
+        <div class="card h-100 shadow-sm border-0">
+          <div class="card-body">
+            <p class="small text-muted mb-1">Date à venir</p>
+            <h5 class="card-title">Titre de l'actualité 1</h5>
+            <p class="card-text">Exemple de texte. Les vraies actualités seront ajoutées depuis l'administration.</p>
+            <a href="#" class="stretched-link" style="color: var(--bleu);">Lire la suite</a>
+          </div>
+        </div>
+      </div>
+
+      <div class="col-md-4" data-aos="fade-up" data-aos-delay="150">
+        <div class="card h-100 shadow-sm border-0">
+          <div class="card-body">
+            <p class="small text-muted mb-1">Date à venir</p>
+            <h5 class="card-title">Titre de l'actualité 2</h5>
+            <p class="card-text">Exemple de texte. Les vraies actualités seront ajoutées depuis l'administration.</p>
+            <a href="#" class="stretched-link" style="color: var(--bleu);">Lire la suite</a>
+          </div>
+        </div>
+      </div>
+
+      <div class="col-md-4" data-aos="fade-up" data-aos-delay="300">
+        <div class="card h-100 shadow-sm border-0">
+          <div class="card-body">
+            <p class="small text-muted mb-1">Date à venir</p>
+            <h5 class="card-title">Titre de l'actualité 3</h5>
+            <p class="card-text">Exemple de texte. Les vraies actualités seront ajoutées depuis l'administration.</p>
+            <a href="#" class="stretched-link" style="color: var(--bleu);">Lire la suite</a>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+{% endblock %}

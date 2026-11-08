@@ -1,0 +1,115 @@
+{% extends "pages/base.html" %}
+{% load static %}
+
+{% block title %}Découvrir la ville | Saint-Louis du Sénégal{% endblock %}
+
+{% block content %}
+
+<style>
+  .page-titre {
+     min-height: 85vh;
+    background-color: var(--bleu);
+    background-image:
+      linear-gradient(rgba(0,0,0,.45), rgba(0,0,0,.45)),
+      url("{% static 'pages/img/hero.jpg' %}");
+    background-size: cover;
+    background-position: center;
+  }
+  .page-titre h1 { font-size: clamp(2.2rem, 6vw, 4.5rem); }
+  .frise { border-left: 3px solid var(--ocre); padding-left: 24px; }
+  .frise .etape { margin-bottom: 28px; position: relative; }
+  .frise .etape::before {
+    content: ""; position: absolute; left: -33px; top: 6px;
+    width: 14px; height: 14px; border-radius: 50%; background: var(--ocre);
+  }
+  .frise .annee { font-family: 'Playfair Display', serif; font-weight: 700; color: var(--ocre); font-size: 1.3rem; }
+</style>
+
+<header class="page-titre d-flex align-items-center text-white text-center">
+  <div class="container" data-aos="fade-up">
+    <h1>Découvrir la ville</h1>
+    <p class="lead mb-0">Histoire, patrimoine et traditions de Saint-Louis</p>
+  </div>
+</header>
+
+<section class="py-5">
+  <div class="container">
+    <h2 class="text-center mb-5" data-aos="fade-up">Une histoire de plus de trois siècles</h2>
+    <div class="row justify-content-center">
+      <div class="col-lg-8">
+        <div class="frise">
+          <div class="etape" data-aos="fade-up">
+            <div class="annee">1659</div>
+            <p>Fondation de la ville sur l'île de N'Dar, au milieu du fleuve Sénégal.</p>
+          </div>
+          <div class="etape" data-aos="fade-up">
+            <div class="annee">1897</div>
+            <p>Mise en place du pont Faidherbe, qui relie l'île à la terre ferme.</p>
+          </div>
+          <div class="etape" data-aos="fade-up">
+            <div class="annee">1902</div>
+            <p>Dakar devient la capitale de l'Afrique-Occidentale française. Saint-Louis reste la capitale du Sénégal jusqu'en 1957.</p>
+          </div>
+          <div class="etape" data-aos="fade-up">
+            <div class="annee">1993</div>
+            <p>Première édition du Festival international de jazz de Saint-Louis.</p>
+          </div>
+          <div class="etape" data-aos="fade-up">
+            <div class="annee">2000</div>
+            <p>L'île de Saint-Louis est inscrite au patrimoine mondial de l'UNESCO.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="py-5 bg-white">
+  <div class="container">
+    <div class="row align-items-center g-5">
+      <div class="col-lg-6" data-aos="fade-right">
+        <h2 class="mb-4">Un patrimoine reconnu par l'UNESCO</h2>
+        <p>
+          L'île de Saint-Louis est célèbre pour son plan régulier, ses quais
+          et son architecture coloniale : maisons à balcons en bois, façades
+          colorées et ruelles bordées d'anciens comptoirs.
+        </p>
+        <p class="mb-0">
+          Se promener dans l'île, c'est traverser plusieurs siècles d'histoire
+          et de rencontres entre cultures.
+        </p>
+      </div>
+      <div class="col-lg-6" data-aos="fade-left">
+        <div style="height:300px; background:linear-gradient(135deg, var(--bleu), #1b7a9c);" class="rounded shadow-sm d-flex align-items-center justify-content-center text-white">Photo à venir</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="py-5">
+  <div class="container">
+    <h2 class="text-center mb-5" data-aos="fade-up">Culture et traditions</h2>
+    <div class="row g-4">
+      <div class="col-md-4" data-aos="fade-up">
+        <div class="p-4 bg-white shadow-sm rounded h-100">
+          <h4 style="color: var(--bleu);">Le jazz</h4>
+          <p class="mb-0">Chaque année, le festival fait vibrer la ville et attire des musiciens et des visiteurs du monde entier.</p>
+        </div>
+      </div>
+      <div class="col-md-4" data-aos="fade-up" data-aos-delay="150">
+        <div class="p-4 bg-white shadow-sm rounded h-100">
+          <h4 style="color: var(--bleu);">Le Fanal</h4>
+          <p class="mb-0">Une grande procession de lanternes géantes, qui met en fête les quartiers de la ville.</p>
+        </div>
+      </div>
+      <div class="col-md-4" data-aos="fade-up" data-aos-delay="300">
+        <div class="p-4 bg-white shadow-sm rounded h-100">
+          <h4 style="color: var(--bleu);">Les pirogues</h4>
+          <p class="mb-0">Les pêcheurs de la Langue de Barbarie perpétuent un savoir-faire transmis de génération en génération.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+{% endblock %}
