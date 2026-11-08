@@ -1,0 +1,90 @@
+{% extends "pages/base.html" %}
+{% load static %}
+
+{% block title %}Nos leaders | Saint-Louis du Sénégal{% endblock %}
+
+{% block content %}
+
+<style>
+  .page-titre {
+    min-height: 60vh;
+    background-color: var(--bleu);
+    background-image:
+      linear-gradient(rgba(0,0,0,.45), rgba(0,0,0,.45)),
+      url("{% static 'pages/img/hero.jpg' %}");
+    background-size: cover;
+    background-position: center;
+  }
+  .page-titre h1 { font-size: clamp(2.2rem, 6vw, 4.5rem); }
+  .photo-principal { width: 100%; height: 420px; object-fit: cover; object-position: top; }
+  .photo-carte { width: 100%; height: 280px; object-fit: cover; object-position: top; }
+  .titre-groupe { border-bottom: 3px solid var(--ocre); display: inline-block; padding-bottom: 6px; }
+  .citation { border-left: 4px solid var(--ocre); padding-left: 16px; font-style: italic; }
+</style>
+
+<header class="page-titre d-flex align-items-center text-white text-center">
+  <div class="container" data-aos="fade-up">
+    <h1>Nos leaders</h1>
+    <p class="lead mb-0">Les responsables et personnalités qui font rayonner Saint-Louis</p>
+  </div>
+</header>
+
+{% if principaux %}
+<section class="py-5">
+  <div class="container">
+    {% for leader in principaux %}
+    <div class="row align-items-center g-5 mb-4" data-aos="fade-up">
+      <div class="col-md-5">
+        <img src="{{ leader.photo.url }}" alt="{{ leader.nom }}" class="photo-principal rounded shadow">
+      </div>
+      <div class="col-md-7">
+        <span class="badge text-dark mb-2" style="background: var(--ocre);">{{ leader.get_groupe_display }}</span>
+        <h2>{{ leader.nom }}</h2>
+        <h5 class="text-muted mb-3">{{ leader.fonction }}</h5>
+         <p>{{ leader.biographie|truncatewords:60 }}</p>
+        <a href="{% url 'leader_detail' leader.pk %}" class="btn btn-ocre btn-sm mb-3">Lire la fiche complète</a>
+        {% if leader.citation %}
+        <p class="citation">« {{ leader.citation }} »</p>
+        {% endif %}
+        {% if leader.email %}<a href="mailto:{{ leader.email }}" class="btn btn-ocre btn-sm me-2">Email</a>{% endif %}
+        {% if leader.facebook %}<a href="{{ leader.facebook }}" class="btn btn-outline-secondary btn-sm me-2" target="_blank">Facebook</a>{% endif %}
+        {% if leader.linkedin %}<a href="{{ leader.linkedin }}" class="btn btn-outline-secondary btn-sm" target="_blank">LinkedIn</a>{% endif %}
+      </div>
+    </div>
+    {% endfor %}
+  </div>
+</section>
+{% endif %}
+
+{% for groupe in groupes %}
+<section class="py-5 {% cycle 'bg-white' '' %}">
+  <div class="container">
+    <h2 class="titre-groupe mb-5" data-aos="fade-up">{{ groupe.nom }}</h2>
+    <div class="row g-4">
+      {% for leader in groupe.membres %}
+      <div class="col-md-6 col-lg-4" data-aos="fade-up">
+        <div class="card h-100 border-0 shadow-sm">
+          <img src="{{ leader.photo.url }}" alt="{{ leader.nom }}" class="photo-carte card-img-top">
+          <div class="card-body">
+            <h5 class="card-title mb-1">{{ leader.nom }}</h5>
+            <p class="small mb-3" style="color: var(--ocre); font-weight: 500;">{{ leader.fonction }}</p>
+            <p class="card-text">{{ leader.biographie|truncatewords:60 }}</p>
+            <a href="{% url 'leader_detail' leader.pk %}" class="stretched-link" style="color: var(--bleu);">Voir la fiche</a>
+          </div>
+        </div>
+      </div>
+      {% endfor %}
+    </div>
+  </div>
+</section>
+{% endfor %}
+
+{% if not principaux and not groupes %}
+<section class="py-5">
+  <div class="container text-center">
+    <p>Aucun leader n'est encore enregistré. Ajoutez-les depuis l'administration.</p>
+  </div>
+</section>
+{% endif %}
+
+{% endblock %}

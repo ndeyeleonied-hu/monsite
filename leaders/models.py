@@ -1,12 +1,12 @@
 from django.db import models
 
 
-# Create your models here.
 class Leader(models.Model):
     GROUPES = [
         ("direction", "Direction"),
         ("conseillers", "Conseillers"),
         ("partenaires", "Partenaires"),
+        ("personnalites", "Personnalités et ambassadeurs"),
     ]
 
     nom = models.CharField(max_length=150)

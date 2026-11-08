@@ -1,0 +1,40 @@
+{% extends "pages/base.html" %}
+
+{% block title %}{{ leader.nom }} | Saint-Louis du Sénégal{% endblock %}
+
+{% block content %}
+
+<style>
+  .photo-fiche { width: 100%; max-height: 500px; object-fit: cover; object-position: top; }
+  .citation { border-left: 4px solid var(--ocre); padding-left: 16px; font-style: italic; }
+</style>
+
+<section class="py-5">
+  <div class="container">
+    <a href="{% url 'leaders' %}" class="btn btn-outline-secondary btn-sm mb-4">← Retour aux leaders</a>
+
+    <div class="row g-5 align-items-start">
+      <div class="col-md-5" data-aos="fade-right">
+        <img src="{{ leader.photo.url }}" alt="{{ leader.nom }}" class="photo-fiche rounded shadow">
+      </div>
+
+      <div class="col-md-7" data-aos="fade-left">
+        <span class="badge text-dark mb-2" style="background: var(--ocre);">{{ leader.get_groupe_display }}</span>
+        <h1>{{ leader.nom }}</h1>
+        <h5 class="text-muted mb-4">{{ leader.fonction }}</h5>
+
+        <p>{{ leader.biographie|linebreaksbr }}</p>
+
+        {% if leader.citation %}
+        <p class="citation my-4">« {{ leader.citation }} »</p>
+        {% endif %}
+
+        {% if leader.email %}<a href="mailto:{{ leader.email }}" class="btn btn-ocre btn-sm me-2">Email</a>{% endif %}
+        {% if leader.facebook %}<a href="{{ leader.facebook }}" class="btn btn-outline-secondary btn-sm me-2" target="_blank">Facebook</a>{% endif %}
+        {% if leader.linkedin %}<a href="{{ leader.linkedin }}" class="btn btn-outline-secondary btn-sm" target="_blank">LinkedIn</a>{% endif %}
+      </div>
+    </div>
+  </div>
+</section>
+
+{% endblock %}
