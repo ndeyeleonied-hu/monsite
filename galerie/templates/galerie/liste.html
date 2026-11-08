@@ -1,0 +1,107 @@
+{% extends "pages/base.html" %}
+{% load static %}
+
+{% block title %}Galerie | Saint-Louis du Sénégal{% endblock %}
+
+{% block content %}
+
+<style>
+  .page-titre {
+    min-height: 60vh;
+    background-color: var(--bleu);
+    background-image:
+      linear-gradient(rgba(0,0,0,.45), rgba(0,0,0,.45)),
+      url("{% static 'pages/img/hero.jpg' %}");
+    background-size: cover;
+    background-position: center;
+  }
+  .page-titre h1 { font-size: clamp(2.2rem, 6vw, 4.5rem); }
+  .vignette-galerie { position: relative; overflow: hidden; border-radius: .5rem; cursor: zoom-in; }
+  .vignette-galerie img { width: 100%; height: 250px; object-fit: cover; transition: transform .4s; }
+  .vignette-galerie:hover img { transform: scale(1.08); }
+  .vignette-galerie .titre-photo {
+    position: absolute; left: 0; right: 0; bottom: 0;
+    padding: 24px 12px 10px; color: #fff; font-size: .9rem;
+    background: linear-gradient(transparent, rgba(0,0,0,.7));
+    opacity: 0; transition: opacity .3s;
+  }
+  .vignette-galerie:hover .titre-photo { opacity: 1; }
+</style>
+
+<header class="page-titre d-flex align-items-center text-white text-center">
+  <div class="container" data-aos="fade-up">
+    <h1>Galerie</h1>
+    <p class="lead mb-0">Saint-Louis en images</p>
+  </div>
+</header>
+
+<section class="py-5">
+  <div class="container">
+
+    <div class="text-center mb-5">
+      <a href="{% url 'galerie' %}" class="btn {% if not categorie_active %}btn-ocre{% else %}btn-outline-secondary{% endif %} m-1">Toutes</a>
+      {% for code, nom in categories %}
+      <a href="?categorie={{ code }}" class="btn {% if categorie_active == code %}btn-ocre{% else %}btn-outline-secondary{% endif %} m-1">{{ nom }}</a>
+      {% endfor %}
+    </div>
+
+    <div class="row g-3">
+      {% for p in photos %}
+      <div class="col-6 col-md-4 col-lg-3" data-aos="fade-up">
+        <div class="vignette-galerie shadow-sm" data-bs-toggle="modal" data-bs-target="#visionneuse" data-index="{{ forloop.counter0 }}">
+          <img src="{{ p.image.url }}" alt="{{ p.titre }}">
+          <div class="titre-photo">{{ p.titre }}</div>
+        </div>
+      </div>
+      {% empty %}
+      <p class="text-center text-muted">Aucune photo pour le moment.</p>
+      {% endfor %}
+    </div>
+
+  </div>
+</section>
+
+<div class="modal fade" id="visionneuse" tabindex="-1" aria-hidden="true">
+  <div class="modal-dialog modal-xl modal-dialog-centered">
+    <div class="modal-content bg-dark border-0">
+      <button type="button" class="btn-close btn-close-white position-absolute top-0 end-0 m-3" style="z-index:5;" data-bs-dismiss="modal" aria-label="Fermer"></button>
+      <div class="modal-body p-0">
+        <div id="carouselGalerie" class="carousel slide">
+          <div class="carousel-inner">
+            {% for p in photos %}
+            <div class="carousel-item {% if forloop.first %}active{% endif %}">
+              <img src="{{ p.image.url }}" class="d-block w-100" style="max-height:78vh; object-fit:contain;" alt="{{ p.titre }}">
+              <div class="text-center text-white p-3">
+                <h5 class="mb-1">{{ p.titre }}</h5>
+                {% if p.legende %}<p class="mb-1">{{ p.legende }}</p>{% endif %}
+                {% if p.credit %}<p class="small text-white-50 mb-0">Crédit : {{ p.credit }}</p>{% endif %}
+              </div>
+            </div>
+            {% endfor %}
+          </div>
+          {% if photos|length > 1 %}
+          <button class="carousel-control-prev" type="button" data-bs-target="#carouselGalerie" data-bs-slide="prev">
+            <span class="carousel-control-prev-icon"></span>
+          </button>
+          <button class="carousel-control-next" type="button" data-bs-target="#carouselGalerie" data-bs-slide="next">
+            <span class="carousel-control-next-icon"></span>
+          </button>
+          {% endif %}
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+  document.addEventListener("DOMContentLoaded", function () {
+    var carousel = document.getElementById("carouselGalerie");
+    document.querySelectorAll("[data-index]").forEach(function (el) {
+      el.addEventListener("click", function () {
+        bootstrap.Carousel.getOrCreateInstance(carousel, { ride: false }).to(parseInt(el.dataset.index));
+      });
+    });
+  });
+</script>
+
+{% endblock %}

@@ -41,6 +41,7 @@ INSTALLED_APPS = [
     'leaders',
     'lieux',
     'actualites',
+    'galerie',
 ]
 
 MIDDLEWARE = [
