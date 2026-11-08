@@ -1,0 +1,76 @@
+{% extends "pages/base.html" %}
+{% load static %}
+
+{% block title %}Lieux à visiter | Saint-Louis du Sénégal{% endblock %}
+
+{% block content %}
+
+<style>
+  .page-titre {
+    min-height: 60vh;
+    background-color: var(--bleu);
+    background-image:
+      linear-gradient(rgba(0,0,0,.45), rgba(0,0,0,.45)),
+      url("{% static 'pages/img/hero.jpg' %}");
+    background-size: cover;
+    background-position: center;
+  }
+  .page-titre h1 { font-size: clamp(2.2rem, 6vw, 4.5rem); }
+  .cadre-photo { overflow: hidden; }
+  .photo-lieu { width: 100%; height: 240px; object-fit: cover; transition: transform .4s; }
+  .carte-lieu:hover .photo-lieu { transform: scale(1.06); }
+</style>
+
+<header class="page-titre d-flex align-items-center text-white text-center">
+  <div class="container" data-aos="fade-up">
+    <h1>Lieux à visiter</h1>
+    <p class="lead mb-0">Patrimoine, nature, culture et gastronomie de Saint-Louis</p>
+  </div>
+</header>
+
+<section class="py-5">
+  <div class="container">
+
+    <form method="get" class="row g-2 justify-content-center mb-4">
+      {% if categorie_active %}<input type="hidden" name="categorie" value="{{ categorie_active }}">{% endif %}
+      <div class="col-md-6">
+        <input type="text" name="q" value="{{ recherche }}" class="form-control form-control-lg" placeholder="Rechercher un lieu...">
+      </div>
+      <div class="col-auto">
+        <button type="submit" class="btn btn-ocre btn-lg">Rechercher</button>
+      </div>
+    </form>
+
+    <div class="text-center mb-5">
+      <a href="{% url 'lieux' %}{% if recherche %}?q={{ recherche|urlencode }}{% endif %}"
+         class="btn {% if not categorie_active %}btn-ocre{% else %}btn-outline-secondary{% endif %} m-1">Tous</a>
+      {% for code, nom in categories %}
+      <a href="?categorie={{ code }}{% if recherche %}&q={{ recherche|urlencode }}{% endif %}"
+         class="btn {% if categorie_active == code %}btn-ocre{% else %}btn-outline-secondary{% endif %} m-1">{{ nom }}</a>
+      {% endfor %}
+    </div>
+
+    <div class="row g-4">
+      {% for lieu in lieux %}
+      <div class="col-md-6 col-lg-4" data-aos="fade-up">
+        <div class="card h-100 border-0 shadow-sm carte-lieu">
+          <a href="{% url 'lieu_detail' lieu.pk %}" class="cadre-photo d-block">
+            <img src="{{ lieu.photo.url }}" alt="{{ lieu.nom }}" class="photo-lieu card-img-top">
+          </a>
+          <div class="card-body">
+            <span class="badge text-dark" style="background: var(--ocre);">{{ lieu.get_categorie_display }}</span>
+            <h5 class="card-title mt-2">{{ lieu.nom }}</h5>
+            <p class="card-text">{{ lieu.description|truncatewords:25 }}</p>
+            <a href="{% url 'lieu_detail' lieu.pk %}" style="color: var(--bleu); font-weight: 500;">Découvrir ce lieu →</a>
+          </div>
+        </div>
+      </div>
+      {% empty %}
+      <p class="text-center text-muted">Aucun lieu ne correspond à votre recherche.</p>
+      {% endfor %}
+    </div>
+
+  </div>
+</section>
+
+{% endblock %}

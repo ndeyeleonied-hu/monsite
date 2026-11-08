@@ -39,6 +39,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'pages',
     'leaders',
+    'lieux',
 ]
 
 MIDDLEWARE = [
@@ -130,3 +131,4 @@ MAILERS = {
 
 MEDIA_URL = "/media/"
 MEDIA_ROOT = BASE_DIR / "media"
+SECURE_REFERRER_POLICY = "strict-origin-when-cross-origin"
