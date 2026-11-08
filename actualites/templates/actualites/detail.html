@@ -1,0 +1,52 @@
+{% extends "pages/base.html" %}
+
+{% block title %}{{ article.titre }} | Saint-Louis du Sénégal{% endblock %}
+
+{% block content %}
+
+<section class="py-5">
+  <div class="container">
+    <a href="{% url 'actualites' %}" class="btn btn-outline-secondary btn-sm mb-4">← Retour aux actualités</a>
+
+    <div class="row justify-content-center">
+      <div class="col-lg-8" data-aos="fade-up">
+        <span class="badge text-dark mb-2" style="background: var(--ocre);">{{ article.get_type_contenu_display }}</span>
+        <h1 class="mb-3">{{ article.titre }}</h1>
+
+        <p class="text-muted">
+          Publié le {{ article.date_publication|date:"d F Y" }}
+          {% if article.type_contenu == "evenement" and article.date_evenement %}
+          <br>📅 Date de l'événement : {{ article.date_evenement|date:"d F Y" }}
+          {% if article.lieu_evenement %} · {{ article.lieu_evenement }}{% endif %}
+          {% endif %}
+        </p>
+
+        {% if article.image %}
+        <img src="{{ article.image.url }}" alt="{{ article.titre }}" class="img-fluid rounded shadow-sm w-100 mb-4" style="max-height:450px; object-fit:cover;">
+        {% endif %}
+
+        <p class="lead">{{ article.resume }}</p>
+        <p>{{ article.contenu|linebreaksbr }}</p>
+      </div>
+    </div>
+
+    {% if autres %}
+    <h3 class="mt-5 mb-4 text-center">À lire aussi</h3>
+    <div class="row g-4 justify-content-center">
+      {% for a in autres %}
+      <div class="col-md-4">
+        <div class="card h-100 border-0 shadow-sm">
+          <div class="card-body">
+            <p class="small text-muted mb-1">{{ a.date_publication|date:"d F Y" }}</p>
+            <h6 class="card-title">{{ a.titre }}</h6>
+            <a href="{% url 'actualite_detail' a.pk %}" class="stretched-link" style="color: var(--bleu);">Lire →</a>
+          </div>
+        </div>
+      </div>
+      {% endfor %}
+    </div>
+    {% endif %}
+  </div>
+</section>
+
+{% endblock %}

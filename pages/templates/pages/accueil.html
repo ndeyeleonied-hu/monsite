@@ -128,40 +128,31 @@
     <p class="text-center text-muted mb-5" data-aos="fade-up">Restez informé de la vie de la ville</p>
 
     <div class="row g-4">
-
+      {% for a in actualites %}
       <div class="col-md-4" data-aos="fade-up">
         <div class="card h-100 shadow-sm border-0">
           <div class="card-body">
-            <p class="small text-muted mb-1">Date à venir</p>
-            <h5 class="card-title">Titre de l'actualité 1</h5>
-            <p class="card-text">Exemple de texte. Les vraies actualités seront ajoutées depuis l'administration.</p>
-            <a href="#" class="stretched-link" style="color: var(--bleu);">Lire la suite</a>
+            <span class="badge text-dark" style="background: var(--ocre);">{{ a.get_type_contenu_display }}</span>
+            <p class="small text-muted mt-2 mb-1">
+              {% if a.type_contenu == "evenement" and a.date_evenement %}
+                📅 {{ a.date_evenement|date:"d F Y" }}{% if a.lieu_evenement %} · {{ a.lieu_evenement }}{% endif %}
+              {% else %}
+                {{ a.date_publication|date:"d F Y" }}
+              {% endif %}
+            </p>
+            <h5 class="card-title">{{ a.titre }}</h5>
+            <p class="card-text">{{ a.resume }}</p>
+            <a href="{% url 'actualite_detail' a.pk %}" class="stretched-link" style="color: var(--bleu);">Lire la suite</a>
           </div>
         </div>
       </div>
+      {% empty %}
+      <p class="text-center text-muted">Aucune actualité pour le moment.</p>
+      {% endfor %}
+    </div>
 
-      <div class="col-md-4" data-aos="fade-up" data-aos-delay="150">
-        <div class="card h-100 shadow-sm border-0">
-          <div class="card-body">
-            <p class="small text-muted mb-1">Date à venir</p>
-            <h5 class="card-title">Titre de l'actualité 2</h5>
-            <p class="card-text">Exemple de texte. Les vraies actualités seront ajoutées depuis l'administration.</p>
-            <a href="#" class="stretched-link" style="color: var(--bleu);">Lire la suite</a>
-          </div>
-        </div>
-      </div>
-
-      <div class="col-md-4" data-aos="fade-up" data-aos-delay="300">
-        <div class="card h-100 shadow-sm border-0">
-          <div class="card-body">
-            <p class="small text-muted mb-1">Date à venir</p>
-            <h5 class="card-title">Titre de l'actualité 3</h5>
-            <p class="card-text">Exemple de texte. Les vraies actualités seront ajoutées depuis l'administration.</p>
-            <a href="#" class="stretched-link" style="color: var(--bleu);">Lire la suite</a>
-          </div>
-        </div>
-      </div>
-
+    <div class="text-center mt-5">
+      <a href="{% url 'actualites' %}" class="btn btn-ocre">Voir toutes les actualités</a>
     </div>
   </div>
 </section>

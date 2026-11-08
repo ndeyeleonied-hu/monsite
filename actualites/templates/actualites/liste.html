@@ -1,0 +1,72 @@
+{% extends "pages/base.html" %}
+{% load static %}
+
+{% block title %}Actualités et événements | Saint-Louis du Sénégal{% endblock %}
+
+{% block content %}
+
+<style>
+  .page-titre {
+    min-height: 60vh;
+    background-color: var(--bleu);
+    background-image:
+      linear-gradient(rgba(0,0,0,.45), rgba(0,0,0,.45)),
+      url("{% static 'pages/img/hero.jpg' %}");
+    background-size: cover;
+    background-position: center;
+  }
+  .page-titre h1 { font-size: clamp(2.2rem, 6vw, 4.5rem); }
+  .image-article { width: 100%; height: 220px; object-fit: cover; }
+  .sans-image { height: 220px; background: linear-gradient(135deg, var(--bleu), #1b7a9c); }
+</style>
+
+<header class="page-titre d-flex align-items-center text-white text-center">
+  <div class="container" data-aos="fade-up">
+    <h1>Actualités et événements</h1>
+    <p class="lead mb-0">Restez informé de la vie de Saint-Louis</p>
+  </div>
+</header>
+
+<section class="py-5">
+  <div class="container">
+
+    <div class="text-center mb-5">
+      <a href="{% url 'actualites' %}" class="btn {% if not type_actif %}btn-ocre{% else %}btn-outline-secondary{% endif %} m-1">Tout</a>
+      {% for code, nom in types %}
+      <a href="?type={{ code }}" class="btn {% if type_actif == code %}btn-ocre{% else %}btn-outline-secondary{% endif %} m-1">{{ nom }}s</a>
+      {% endfor %}
+    </div>
+
+    <div class="row g-4">
+      {% for a in articles %}
+      <div class="col-md-6 col-lg-4" data-aos="fade-up">
+        <div class="card h-100 border-0 shadow-sm">
+          {% if a.image %}
+          <img src="{{ a.image.url }}" alt="{{ a.titre }}" class="image-article card-img-top">
+          {% else %}
+          <div class="sans-image rounded-top"></div>
+          {% endif %}
+          <div class="card-body">
+            <span class="badge text-dark" style="background: var(--ocre);">{{ a.get_type_contenu_display }}</span>
+            <p class="small text-muted mt-2 mb-1">
+              {% if a.type_contenu == "evenement" and a.date_evenement %}
+                📅 {{ a.date_evenement|date:"d F Y" }}{% if a.lieu_evenement %} · {{ a.lieu_evenement }}{% endif %}
+              {% else %}
+                {{ a.date_publication|date:"d F Y" }}
+              {% endif %}
+            </p>
+            <h5 class="card-title">{{ a.titre }}</h5>
+            <p class="card-text">{{ a.resume }}</p>
+            <a href="{% url 'actualite_detail' a.pk %}" class="stretched-link" style="color: var(--bleu);">Lire la suite</a>
+          </div>
+        </div>
+      </div>
+      {% empty %}
+      <p class="text-center text-muted">Aucun article pour le moment.</p>
+      {% endfor %}
+    </div>
+
+  </div>
+</section>
+
+{% endblock %}

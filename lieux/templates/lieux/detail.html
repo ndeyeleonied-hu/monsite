@@ -81,8 +81,10 @@
     <div class="row mt-5">
       <div class="col-12" data-aos="fade-up">
         <h2 class="mb-3">Localisation</h2>
-        <div id="carte-lieu" style="height: 400px;" class="rounded shadow-sm"></div>
-      </div>
+        <div id="carte-lieu" style="height: 400px;" class="rounded shadow-sm"
+             data-lat="{{ lieu.latitude|stringformat:'f' }}"
+             data-lng="{{ lieu.longitude|stringformat:'f' }}"
+             data-nom="{{ lieu.nom }}"></div>      </div>
     </div>
     {% endif %}
 

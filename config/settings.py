@@ -40,6 +40,7 @@ INSTALLED_APPS = [
     'pages',
     'leaders',
     'lieux',
+    'actualites',
 ]
 
 MIDDLEWARE = [
