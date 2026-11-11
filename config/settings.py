@@ -42,6 +42,7 @@ INSTALLED_APPS = [
     'lieux',
     'actualites',
     'galerie',
+    'contact',
 ]
 
 MIDDLEWARE = [
@@ -134,3 +135,13 @@ MAILERS = {
 MEDIA_URL = "/media/"
 MEDIA_ROOT = BASE_DIR / "media"
 SECURE_REFERRER_POLICY = "strict-origin-when-cross-origin"
+
+
+DEFAULT_FROM_EMAIL = "site@saint-louis.local"
+CONTACT_EMAIL = "contact@saint-louis.local"
+
+SITE_CONTACT = {
+    "email": "",
+    "telephone": "",
+    "adresse": "",
+}

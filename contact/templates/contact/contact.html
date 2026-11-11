@@ -1,0 +1,82 @@
+{% extends "pages/base.html" %}
+{% load static %}
+
+{% block title %}Contact | Saint-Louis du Sénégal{% endblock %}
+
+{% block content %}
+
+<style>
+  .page-titre {
+    min-height: 60vh;
+    background-color: var(--bleu);
+    background-image:
+      linear-gradient(rgba(0,0,0,.45), rgba(0,0,0,.45)),
+      url("{% static 'pages/img/hero.jpg' %}");
+    background-size: cover;
+    background-position: center;
+  }
+  .page-titre h1 { font-size: clamp(2.2rem, 6vw, 4.5rem); }
+  .piege { position: absolute; left: -9999px; height: 0; overflow: hidden; }
+</style>
+
+<header class="page-titre d-flex align-items-center text-white text-center">
+  <div class="container" data-aos="fade-up">
+    <h1>Contact</h1>
+    <p class="lead mb-0">Une question, une suggestion ? Écrivez-nous</p>
+  </div>
+</header>
+
+<section class="py-5">
+  <div class="container">
+    <div class="row g-5">
+
+      <div class="col-lg-7" data-aos="fade-right">
+        <h2 class="mb-4">Envoyez-nous un message</h2>
+
+        {% if envoye %}
+        <div class="alert alert-success" role="alert">
+          Merci, votre message a bien été envoyé. Nous vous répondrons dès que possible.
+        </div>
+        {% endif %}
+
+        <form method="post" novalidate>
+          {% csrf_token %}
+
+          <div class="piege" aria-hidden="true">
+            <label for="{{ form.site_web.id_for_label }}">Ne pas remplir</label>
+            {{ form.site_web }}
+          </div>
+
+          {% for champ in form.visible_fields %}
+            {% if champ.name != "site_web" %}
+            <div class="mb-3">
+              <label for="{{ champ.id_for_label }}" class="form-label">{{ champ.label }}</label>
+              {{ champ }}
+              {% for erreur in champ.errors %}
+              <div class="text-danger small mt-1">{{ erreur }}</div>
+              {% endfor %}
+            </div>
+            {% endif %}
+          {% endfor %}
+
+          <button type="submit" class="btn btn-ocre btn-lg">Envoyer le message</button>
+        </form>
+      </div>
+
+      <div class="col-lg-5" data-aos="fade-left">
+        <div class="bg-white shadow-sm rounded p-4">
+          <h4 style="color: var(--bleu);">Nos coordonnées</h4>
+          {% if site_contact.adresse %}<p class="mb-2">📍 {{ site_contact.adresse }}</p>{% endif %}
+          {% if site_contact.telephone %}<p class="mb-2">📞 <a href="tel:{{ site_contact.telephone|cut:' ' }}">{{ site_contact.telephone }}</a></p>{% endif %}
+          {% if site_contact.email %}<p class="mb-2">✉️ <a href="mailto:{{ site_contact.email }}">{{ site_contact.email }}</a></p>{% endif %}
+          {% if not site_contact.adresse and not site_contact.telephone and not site_contact.email %}
+          <p class="text-muted mb-0">Utilisez le formulaire pour nous écrire.</p>
+          {% endif %}
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+{% endblock %}
