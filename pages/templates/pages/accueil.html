@@ -76,49 +76,35 @@
     </div>
   </div>
 </section>
+
 <section id="lieux" class="py-5 bg-white">
   <div class="container">
     <h2 class="text-center mb-2" data-aos="fade-up">Lieux à la une</h2>
     <p class="text-center text-muted mb-5" data-aos="fade-up">Les incontournables de Saint-Louis</p>
 
     <div class="row g-4">
-
+      {% for lieu in lieux %}
       <div class="col-md-4" data-aos="fade-up">
         <div class="card h-100 border-0 shadow-sm">
-          <div style="height:200px; background:linear-gradient(135deg, var(--bleu), #1b7a9c);" class="rounded-top d-flex align-items-center justify-content-center text-white">Photo à venir</div>
+          <a href="{% url 'lieu_detail' lieu.pk %}">
+            <img src="{{ lieu.photo.url }}" alt="{{ lieu.nom }}" class="card-img-top" style="height:220px; object-fit:cover;">
+          </a>
           <div class="card-body">
-            <span class="badge text-dark" style="background: var(--ocre);">Patrimoine</span>
-            <h5 class="card-title mt-2">Pont Faidherbe</h5>
-            <p class="card-text">Pont métallique emblématique qui relie l'île de Saint-Louis à la terre ferme.</p>
+            <span class="badge text-dark" style="background: var(--ocre);">{{ lieu.get_categorie_display }}</span>
+            <h5 class="card-title mt-2">{{ lieu.nom }}</h5>
+            <p class="card-text">{{ lieu.description|truncatewords:25 }}</p>
+            <a href="{% url 'lieu_detail' lieu.pk %}" style="color: var(--bleu); font-weight: 500;">Découvrir →</a>
           </div>
         </div>
       </div>
-
-      <div class="col-md-4" data-aos="fade-up" data-aos-delay="150">
-        <div class="card h-100 border-0 shadow-sm">
-          <div style="height:200px; background:linear-gradient(135deg, var(--bleu), #1b7a9c);" class="rounded-top d-flex align-items-center justify-content-center text-white">Photo à venir</div>
-          <div class="card-body">
-            <span class="badge text-dark" style="background: var(--ocre);">Patrimoine</span>
-            <h5 class="card-title mt-2">L'île de Saint-Louis</h5>
-            <p class="card-text">Le cœur historique classé à l'UNESCO, avec ses façades coloniales et ses ruelles.</p>
-          </div>
-        </div>
-      </div>
-
-      <div class="col-md-4" data-aos="fade-up" data-aos-delay="300">
-        <div class="card h-100 border-0 shadow-sm">
-          <div style="height:200px; background:linear-gradient(135deg, var(--bleu), #1b7a9c);" class="rounded-top d-flex align-items-center justify-content-center text-white">Photo à venir</div>
-          <div class="card-body">
-            <span class="badge text-dark" style="background: var(--ocre);">Nature</span>
-            <h5 class="card-title mt-2">La Langue de Barbarie</h5>
-            <p class="card-text">Une bande de sable entre le fleuve et l'océan, célèbre pour ses pirogues colorées.</p>
-          </div>
-        </div>
-      </div>
-
+      {% empty %}
+      <p class="text-center text-muted">Cochez « Afficher à la une » sur un lieu, dans l'administration, pour le voir ici.</p>
+      {% endfor %}
     </div>
+
     <div class="text-center mt-5">
-<a href="{% url 'lieux' %}" class="btn btn-ocre">Voir tous les lieux</a>    </div>
+      <a href="{% url 'lieux' %}" class="btn btn-ocre">Voir tous les lieux</a>
+    </div>
   </div>
 </section>
 
